@@ -1,0 +1,7 @@
+streamlit
+docxtpl
+tempfile
+DocxTemplate
+os
+convert
+docx2pdf
