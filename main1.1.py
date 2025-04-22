@@ -2,7 +2,6 @@ import streamlit as st
 from docxtpl import DocxTemplate
 import tempfile
 import os
-from docx2pdf import convert
 
 st.title("Legal Form Filler App")
 
@@ -32,18 +31,16 @@ if form_choice:
             label = field.replace('_', ' ').capitalize()
             context[field] = st.text_area(label)
 
-        if st.button("Generate PDF"):
+        if st.button("Generate DOCX"):
             filled_docx_path = os.path.join(tmpdirname, "filled_form.docx")
-            filled_pdf_path = os.path.join(tmpdirname, "filled_form.pdf")
-
             doc.render(context)
             doc.save(filled_docx_path)
-            convert(filled_docx_path, filled_pdf_path)
 
-            with open(filled_pdf_path, "rb") as f:
+            with open(filled_docx_path, "rb") as f:
                 st.download_button(
-                    label="Download Filled Form as PDF",
+                    label="Download Filled Form as DOCX",
                     data=f,
-                    file_name=f"{form_choice.replace(' ', '_')}.pdf",
-                    mime="application/pdf"
+                    file_name=f"{form_choice.replace(' ', '_')}.docx",
+                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 )
+
